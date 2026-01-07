@@ -171,6 +171,11 @@
 											"items": {
 												"type": "string"
 											}
+										},
+										"extraArguments": {
+											"type": "string",
+											"description": "A string that defines how command line argument merge with the arguments property set within config.json",
+											"enum": ["ignore", "override", "append"]
 										}
 									},
 									"additionalProperties": false
