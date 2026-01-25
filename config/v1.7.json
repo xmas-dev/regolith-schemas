@@ -52,7 +52,11 @@
 											"build": {
 												"type": "string",
 												"description": "The build of the Minecraft to export to.",
-												"enum": [ "standard", "education", "preview" ]
+												"enum": [
+													"standard",
+													"education",
+													"preview"
+												]
 											},
 											"rpName": {
 												"description": "The name of the directory for the RP files export defined as an expression evaluated with go-simple-eval (https://github.com/stirante/go-simple-eval/ ).",
@@ -73,7 +77,11 @@
 											"build": {
 												"type": "string",
 												"description": "The build of the Minecraft to export to.",
-												"enum": [ "standard", "education", "preview" ]
+												"enum": [
+													"standard",
+													"education",
+													"preview"
+												]
 											},
 											"worldName": {
 												"description": "The name of the world for exporting packs. Use only for the 'world' export target.",
@@ -141,6 +149,76 @@
 								"items": {
 									"$ref": "#/definitions/filterReferenceObject"
 								}
+							},
+							"preShell": {
+								"description": "Shell commands to run before filters. Can be a list of commands for any system or an object specifying commands per operating system.",
+								"oneOf": [
+									{
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									},
+									{
+										"type": "object",
+										"properties": {
+											"windows": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"linux": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"darwin": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											}
+										},
+										"additionalProperties": false
+									}
+								]
+							},
+							"postShell": {
+								"description": "Shell commands to run after filters. Can be a list of commands for any system or an object specifying commands per operating system.",
+								"oneOf": [
+									{
+										"type": "array",
+										"items": {
+											"type": "string"
+										}
+									},
+									{
+										"type": "object",
+										"properties": {
+											"windows": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"linux": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											},
+											"darwin": {
+												"type": "array",
+												"items": {
+													"type": "string"
+												}
+											}
+										},
+										"additionalProperties": false
+									}
+								]
 							}
 						},
 						"additionalProperties": false
@@ -256,7 +334,7 @@
 				"extraArguments": {
 					"type": "string",
 					"description": "A string that defines how command line argument merge with the arguments property set within config.json",
-					"enum": [ "ignore", "override", "append" ]
+					"enum": ["ignore", "override", "append"]
 				},
 				"asyncFilters": {
 					"type": "array",
