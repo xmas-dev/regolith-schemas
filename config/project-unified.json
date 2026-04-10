@@ -1,0 +1,7 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "allOf": [
+    { "$ref": "https://raw.githubusercontent.com/xmas-dev/regolith-schemas/main/config/project-config.json" },
+    { "$ref": "https://raw.githubusercontent.com/xmas-dev/regolith-schemas/main/config/unified.json" }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "ConfigJson",
+  "required": ["type", "name", "authors", "targetVersion", "namespace", "packs", "worlds"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["minecraftBedrock", "minecraftJava"],
+      "description": "Defines the type of a project"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the project"
+    },
+    "authors": {
+      "type": "array",
+      "description": "Creator of the project",
+      "items": {
+        "oneOf": [
+          { "type": "string" },
+          { "$ref": "#/definitions/AuthorData" }
+        ]
+      }
+    },
+    "targetVersion": {
+      "type": "string",
+      "description": "The Minecraft version this project targets (e.g., \"1.17.0\" or \"1.16.220\")"
+    },
+    "experimentalGameplay": {
+      "type": "object",
+      "description": "Experimental gameplay the project intends to use. Maps strings to experimental gameplay toggles.",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "namespace": {
+      "type": "string",
+      "description": "The namespace used for the project. The namespace \"minecraft\" is not a valid string for this field.",
+      "not": { "const": "minecraft" }
+    },
+    "packs": {
+      "type": "object",
+      "description": "Maps the id of packs this project contains to a path relative to the config.json",
+      "properties": {
+        "behaviorPack": { "type": "string" },
+        "resourcePack": { "type": "string" },
+        "skinPack": { "type": "string" },
+        "worldTemplate": { "type": "string" },
+        "dataPack": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "worlds": {
+      "type": "array",
+      "description": "Defines a list of glob patterns pointing to folders storing Minecraft worlds. Glob patterns may not end with \"**\" to avoid ambiguity.",
+      "items": { "type": "string" }
+    },
+    "packDefinitions": {
+      "type": "object",
+      "description": "Allows users to define additional data which is hard to find for tools (e.g. scoreboards setup inside of a world)",
+      "properties": {
+        "families": { "$ref": "#/definitions/PackDefinition" },
+        "tags": { "$ref": "#/definitions/PackDefinition" },
+        "scoreboardObjectives": { "$ref": "#/definitions/PackDefinition" },
+        "names": { "$ref": "#/definitions/PackDefinition" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true,
+  "definitions": {
+    "AuthorData": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name of the author"
+        },
+        "logo": {
+          "type": "string",
+          "description": "Path to an image (relative to the project root) that serves as an icon for this author. Tools should support \".png\" & \".jpg\" images"
+        }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "PackDefinition": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "Optional: Define e.g. the type of a scoreboard objective"
+        },
+        "exclude": {
+          "type": "array",
+          "description": "Strings to exclude from a tool's collected data",
+          "items": { "type": "string" }
+        },
+        "include": {
+          "type": "array",
+          "description": "String to add to a tool's collected data",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
